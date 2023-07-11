@@ -4,10 +4,10 @@ set -e
 # 初始化 kubeadm
 kubeadm config images list --image-repository registry.aliyuncs.com/google_containers
 kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
-kubeadm init --config=/vagrant/kubeadm.yml --upload-certs --ignore-preflight-errors=ImagePull
+kubeadm init --config=/vagrant/conf/kubeadm.yml --upload-certs --ignore-preflight-errors=ImagePull
 
-kubectl create -f /vagrant/tigera-operator.yaml
-kubectl create -f /vagrant/custom-resources.yaml
+kubectl create -f /vagrant/conf/tigera-operator.yaml
+kubectl create -f /vagrant/conf/custom-resources.yaml
 
 # 配置用户
 usermod -aG root vagrant

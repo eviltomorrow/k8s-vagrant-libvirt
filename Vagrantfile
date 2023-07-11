@@ -7,13 +7,13 @@ NUM_DISKS = 1
 DISK_GBS = 20
 
 MASTER_IP = "192.168.133.100"
-WORKER_IP_BASE = "192.168.133.2" # 200, 201, ...
+NODE_IP_BASE = "192.168.133.2" # 200, 201, ...
 TOKEN = "abcdef.0123456789abcdef"
 
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/bullseye64"
   # config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.provision "shell", path: "common.sh"
+  config.vm.provision "shell", path: "sh/common.sh"
 
   config.vm.provider :libvirt do |libvirt|
     libvirt.cpu_mode = 'host-passthrough'
@@ -31,22 +31,22 @@ Vagrant.configure("2") do |config|
         libvirt.storage :file, :size => "#{DISK_GBS}G"
       end
     end
-    master.vm.provision "shell", path: "master.sh",
-      env: { "DEBIAN_FRONTEND"=>"noninteractive", "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
+    master.vm.provision "shell", path: "sh/master.sh",
+      env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
 
   end
 
   (1..NUM_NODES).each do |i|
     config.vm.define "node0#{i}" do |node|
       node.vm.hostname = "node0#{i}"
-      node.vm.network "private_network", ip: "#{WORKER_IP_BASE}" + i.to_s.rjust(2, '0')
+      node.vm.network "private_network", ip: "#{NODE_IP_BASE}" + i.to_s.rjust(2, '0')
       (1..NUM_DISKS).each do |j|
         node.vm.provider :libvirt do |libvirt|
           libvirt.storage :file, :size => "#{DISK_GBS}G"
         end
       end
-      node.vm.provision "shell", path: "node.sh",
-        env: { "DEBIAN_FRONTEND"=>"noninteractive", "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
+      node.vm.provision "shell", path: "sh/node.sh",
+        env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
     end
   end
 end
