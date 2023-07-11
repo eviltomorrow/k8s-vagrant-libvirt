@@ -9,8 +9,9 @@ deb http://ftp.cn.debian.org/debian/ bullseye-proposed-updates contrib main
 deb http://ftp.cn.debian.org/debian-security bullseye-security main
 EOF
 
-apt-getupdate
-apt-getupgrade
+apt-get update
+# apt-get upgrade
+# apt-get autoremove
 
 echo "export PATH=$PATH:/sbin" > ~/.bashrc
 source ~/.bashrc
