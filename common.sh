@@ -1,6 +1,7 @@
 #!/bin/bash 
 
 echo "Setup base env"
+export DEBIAN_FRONTEND=noninteractive
 
 echo "export PATH=$PATH:/sbin" > ~/.bashrc
 source ~/.bashrc
@@ -46,7 +47,7 @@ sysctl --system
 # install crontainerd.io
 for pkg in docker.io docker-doc docker-compose containerd runc; do sudo apt-get remove $pkg; done
 sudo apt-get update
-sudo apt-get install -y ca-certificates curl gnupg
+sudo apt-get install -y ca-certificates curl gnupg vim
 sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 sudo chmod a+r /etc/apt/keyrings/docker.gpg

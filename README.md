@@ -1,6 +1,10 @@
 # k8s-vagrant-libvirt
 Kubernetes install with vagrant libvirt
 
+# 准备
+
+   安装 vagrant, libvirt
+
 # 第一步
 
 ## git clone https://github.com/eviltomorrow/k8s-vagrant-libvirt.git
