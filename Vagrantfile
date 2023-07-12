@@ -13,7 +13,7 @@ TOKEN = "abcdef.0123456789abcdef"
 Vagrant.configure("2") do |config|
   config.vm.box = "debian/bullseye64"
   # config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.provision "shell", path: "sh/common.sh"
+  config.vm.provision "shell", path: "sh/bootstrap.sh"
 
   config.vm.provider :libvirt do |libvirt|
     libvirt.cpu_mode = 'host-passthrough'
