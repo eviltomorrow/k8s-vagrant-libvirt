@@ -8,7 +8,7 @@
 
 # 安装
 
-## git clone https://github.com/eviltomorrow/k8s-vagrant-libvirt.git
+   git clone https://github.com/eviltomorrow/k8s-vagrant-libvirt.git
 
    进入目录，执行 vagrant up，等待安装完成
 
