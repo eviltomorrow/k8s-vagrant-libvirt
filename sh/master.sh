@@ -9,8 +9,8 @@ kubeadm init --config=/vagrant/conf/kubeadm.yml --upload-certs --ignore-prefligh
 # 配置用户
 usermod -aG root vagrant
 chmod u+w /etc/sudoers
-cat >> /etc/sudoers <<EOF
-vagrant ALL=(ALL) ALL
+cat > /etc/sudoers.d/vagrant <<EOF
+vagrant ALL=(ALL) NOPASSWD:ALL
 EOF
 chmod u-w /etc/sudoers
 

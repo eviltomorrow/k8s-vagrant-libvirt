@@ -10,8 +10,8 @@ deb http://ftp.cn.debian.org/debian-security bullseye-security main
 EOF
 
 apt-get update
-# apt-get upgrade
-# apt-get autoremove
+apt-get dist-upgrade
+apt-get autoremove
 
 echo "export PATH=$PATH:/sbin" > ~/.bashrc
 source ~/.bashrc

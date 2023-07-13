@@ -16,10 +16,10 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "sh/bootstrap.sh"
 
   config.vm.provider :libvirt do |libvirt|
-    libvirt.cpu_mode = 'host-passthrough'
+    # libvirt.cpu_mode = 'host-passthrough'
     libvirt.memory = 2048
     libvirt.cpus = 2
-    libvirt.qemu_use_session = false
+    # libvirt.qemu_use_session = false
   end
 
 
