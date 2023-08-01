@@ -32,6 +32,7 @@ mkdir -p ~/.kube
 cp /etc/kubernetes/admin.conf ~/.kube/config
 echo "export KUBECONFIG=~/.kube/config" >> ~/.bashrc
 echo "alias k='kubectl'" >> ~/.bashrc
+source <(kubectl completion bash | sed s/kubectl/k/g)
 EOF
 chmod 0600 /etc/kubernetes/admin.conf
 

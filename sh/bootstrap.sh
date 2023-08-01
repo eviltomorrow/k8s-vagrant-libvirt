@@ -4,13 +4,13 @@ echo "Setup base env"
 export DEBIAN_FRONTEND=noninteractive
 
 cat > /etc/apt/sources.list << EOF
-deb http://ftp.cn.debian.org/debian/ bullseye main contrib
-deb http://ftp.cn.debian.org/debian/ bullseye-proposed-updates contrib main
-deb http://ftp.cn.debian.org/debian-security bullseye-security main
+deb http://ftp.cn.debian.org/debian/ bookworm main contrib
+deb http://ftp.cn.debian.org/debian/ bookworm-proposed-updates contrib main
+deb http://ftp.cn.debian.org/debian-security bookworm-security main
 EOF
 
-apt-get update
-apt-get dist-upgrade
+apt-get update -y
+apt-get dist-upgrade -y
 apt-get autoremove
 
 echo "export PATH=$PATH:/sbin" > ~/.bashrc
