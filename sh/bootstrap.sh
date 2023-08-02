@@ -4,9 +4,10 @@ echo "Setup base env"
 export DEBIAN_FRONTEND=noninteractive
 
 cat > /etc/apt/sources.list << EOF
-deb http://ftp.cn.debian.org/debian/ bookworm main contrib
-deb http://ftp.cn.debian.org/debian/ bookworm-proposed-updates contrib main
-deb http://ftp.cn.debian.org/debian-security bookworm-security main
+deb http://ftp.cn.debian.org/debian/ testing main contrib non-free-firmware non-free
+deb http://ftp.cn.debian.org/debian/ testing-proposed-updates non-free-firmware contrib non-free main
+deb http://ftp.cn.debian.org/debian/ testing-updates main non-free-firmware non-free
+deb http://ftp.cn.debian.org/debian/ testing-backports main contrib non-free-firmware non-free
 EOF
 
 apt-get update -y
