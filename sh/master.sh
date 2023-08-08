@@ -36,5 +36,5 @@ echo "source <(kubectl completion bash | sed s/kubectl/k/g)" >> ~/.bashrc
 EOF
 chmod 0600 /etc/kubernetes/admin.conf
 
-kubectl create -f /vagrant/conf/tigera-operator.yaml
-kubectl create -f /vagrant/conf/custom-resources.yaml
+# kubectl create -f /vagrant/conf/tigera-operator.yaml
+# kubectl create -f /vagrant/conf/custom-resources.yaml
