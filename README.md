@@ -25,8 +25,11 @@
    ```sh
    1、进入目录，执行 vagrant up，等待安装完成
 
-   2、
+   2、参考：https://tinychen.com/20220510-k8s-04-deploy-k8s-with-cilium/#5%E3%80%81%E5%AE%89%E8%A3%85CNI
+   
       # cilium的cli工具是一个二进制的可执行文件
+      $ curl -L --remote-name-all https://github.com/cilium/cilium-cli/releases/latest/download/cilium-linux-amd64.tar.gz{,.sha256sum}
+      $ sha256sum --check cilium-linux-amd64.tar.gz.sha256sum
       $ tar zxvfC /vagrant/bin/cilium-linux-amd64.tar.gz /usr/local/bin/  
 
       # 使用该命令即可完成cilium的安装
@@ -36,6 +39,9 @@
       $ cilium hubble enable
 
       # 安装hubble-cli工具，安装逻辑和cilium-cli的逻辑相似
+      $ export HUBBLE_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/hubble/master/stable.txt)
+      $ curl -L --remote-name-all https://github.com/cilium/hubble/releases/download/$HUBBLE_VERSION/hubble-linux-amd64.tar.gz{,.sha256sum}
+      $ sha256sum --check hubble-linux-amd64.tar.gz.sha256sum
       $ tar xzvfC hubble-linux-amd64.tar.gz /usr/local/bin
 
       # 首先我们要开启hubble的api，使用cilium-cli开启转发
