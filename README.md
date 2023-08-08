@@ -13,57 +13,19 @@
 
 # 启用 CNI
 
-   - 使用 calico，打开 sh/master.sh 下最后两行的注释， 进入目录，执行 vagrant up，等待安装完成
+   - 使用 calico，打开 # calico 下最后两行的注释， 进入目录，执行 vagrant up，等待安装完成
 
    ```sh
    # kubectl create -f /vagrant/conf/tigera-operator.yaml
    # kubectl create -f /vagrant/conf/custom-resources.yaml
    ```
 
-   - 使用 clilium，请按如下操作
+   - 使用 clilium，打开 # calico 下最后两行的注释， 进入目录，执行 vagrant up，等待安装完成(耗时长)
 
    ```sh
-   1、进入目录，执行 vagrant up，等待安装完成
-
-   2、参考：https://tinychen.com/20220510-k8s-04-deploy-k8s-with-cilium/#5%E3%80%81%E5%AE%89%E8%A3%85CNI
-   
-      # cilium的cli工具是一个二进制的可执行文件
-      $ curl -L --remote-name-all https://github.com/cilium/cilium-cli/releases/latest/download/cilium-linux-amd64.tar.gz{,.sha256sum}
-      $ sha256sum --check cilium-linux-amd64.tar.gz.sha256sum
-      $ tar zxvfC /vagrant/bin/cilium-linux-amd64.tar.gz /usr/local/bin/  
-
-      # 使用该命令即可完成cilium的安装
-      $ cilium install
-
-      # 我们先使用cilium-cli工具在k8s集群中部署hubble，只需要下面一条命令即可
-      $ cilium hubble enable
-
-      # 安装hubble-cli工具，安装逻辑和cilium-cli的逻辑相似
-      $ export HUBBLE_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/hubble/master/stable.txt)
-      $ curl -L --remote-name-all https://github.com/cilium/hubble/releases/download/$HUBBLE_VERSION/hubble-linux-amd64.tar.gz{,.sha256sum}
-      $ sha256sum --check hubble-linux-amd64.tar.gz.sha256sum
-      $ tar xzvfC hubble-linux-amd64.tar.gz /usr/local/bin
-
-      # 首先我们要开启hubble的api，使用cilium-cli开启转发
-      $ cilium hubble port-forward&
-
-      # 测试 cilium 状态
-      $ cilimu status
-
-      # 测试和hubble-api的连通性
-      $ hubble status
-
-      # 使用hubble命令查看数据的转发情况
-      $ hubble observe
-
-      # 开启hubble ui组件
-      $ cilium hubble enable --ui
-
-      # 实际上这时候我们再查看k8s集群的状态可以看到部署了一个名为hubble-ui的deployment
-      $ kubectl get deployment -n kube-system | grep hubble
-      $ kubectl get svc -n kube-system | grep hubble
-
-      # 将hubble-ui这个服务的80端口暴露到宿主机上面的12000端口上面
-      $ cilium hubble ui&
+   # mkdir -p /usr/local/app/helm; tar zxvfC /vagrant/bin/helm-v3.12.2-linux-amd64.tar.gz /usr/local/app/helm; ln -s /usr/local/app/helm/linux-amd64/helm /usr/local/bin/helm
+   # helm repo add cilium https://helm.cilium.io
+   # kubectl create namespace cilium-system
+   # helm install cilium cilium/cilium --namespace cilium-system --set hubble.relay.enabled=true --set hubble.ui.enabled=true --set prometheus.enabled=true --set operator.prometheus.enabled=true --set hubble.enabled=true --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}"
    ```
 
