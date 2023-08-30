@@ -29,3 +29,4 @@
    # helm install cilium cilium/cilium --namespace cilium-system --set hubble.relay.enabled=true --set hubble.ui.enabled=true --set prometheus.enabled=true --set operator.prometheus.enabled=true --set hubble.enabled=true --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}"
    ```
 
+注意:安装完成后，有的 pod 会是 error 状态，重启虚拟机就 OK 了
