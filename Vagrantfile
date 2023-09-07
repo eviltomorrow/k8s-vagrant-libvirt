@@ -9,9 +9,10 @@ DISK_GBS = 20
 MASTER_IP = "192.168.133.100"
 NODE_IP_BASE = "192.168.133.2" # 200, 201, ...
 TOKEN = "abcdef.0123456789abcdef"
+VM_BOX = "eviltomorrow/debian12"
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "eviltomorrow/debian12"
+  config.vm.box = VM_BOX
   # config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.provision "shell", path: "sh/bootstrap.sh"
 
