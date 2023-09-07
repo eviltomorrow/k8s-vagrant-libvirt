@@ -11,7 +11,7 @@ NODE_IP_BASE = "192.168.133.2" # 200, 201, ...
 TOKEN = "abcdef.0123456789abcdef"
 
 Vagrant.configure("2") do |config|
-  config.vm.box = "debian/bookworm64"
+  config.vm.box = "eviltomorrow/bookworm64"
   # config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.provision "shell", path: "sh/bootstrap.sh"
 

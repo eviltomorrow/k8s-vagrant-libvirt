@@ -3,12 +3,12 @@
 echo "Setup base env"
 export DEBIAN_FRONTEND=noninteractive
 
-cat > /etc/apt/sources.list << EOF
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free-firmware non-free
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-proposed-updates non-free-firmware contrib non-free main
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main non-free-firmware non-free
-deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free-firmware non-free
-EOF
+# cat > /etc/apt/sources.list << EOF
+# deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free-firmware non-free
+# deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-proposed-updates non-free-firmware contrib non-free main
+# deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main non-free-firmware non-free
+# deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free-firmware non-free
+# EOF
 
 apt-get update -y
 apt-get dist-upgrade -y
