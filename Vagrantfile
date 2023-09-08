@@ -9,9 +9,15 @@ DISK_GBS = 20
 MASTER_IP = "192.168.133.100"
 NODE_IP_BASE = "192.168.133.2" # 200, 201, ...
 TOKEN = "abcdef.0123456789abcdef"
-VM_BOX = "eviltomorrow/debian12"
+VM_BOX = "debian/bookworm64"
 
 Vagrant.configure("2") do |config|
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+    config.proxy.http     = "socks5://127.0.0.1:1080"
+    config.proxy.https    = "socks5://127.0.0.1:1080"
+    config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
+  end
+
   config.vm.box = VM_BOX
   # config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.provision "shell", path: "sh/bootstrap.sh"
@@ -22,7 +28,6 @@ Vagrant.configure("2") do |config|
     libvirt.cpus = 2
     # libvirt.qemu_use_session = false
   end
-
 
   config.vm.define "master" do |master|
     master.vm.hostname = "master"
