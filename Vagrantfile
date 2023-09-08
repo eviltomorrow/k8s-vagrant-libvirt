@@ -13,9 +13,11 @@ VM_BOX = "debian/bookworm64"
 
 Vagrant.configure("2") do |config|
   if Vagrant.has_plugin?("vagrant-proxyconf")
-    config.proxy.http     = "socks5://127.0.0.1:1080"
-    config.proxy.https    = "socks5://127.0.0.1:1080"
+    config.proxy.http     = "http://192.168.16.74:1081"
+    config.proxy.https    = "http://192.168.16.74:1081"
     config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
+    config.apt_proxy.http = "http://192.168.16.74:1081"
+    config.apt_proxy.https = "DIRECT"
   end
 
   config.vm.box = VM_BOX
