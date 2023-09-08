@@ -12,16 +12,11 @@ TOKEN = "abcdef.0123456789abcdef"
 VM_BOX = "debian/bookworm64"
 
 Vagrant.configure("2") do |config|
-  if Vagrant.has_plugin?("vagrant-proxyconf")
-    config.proxy.http     = "http://192.168.16.74:1081"
-    config.proxy.https    = "http://192.168.16.74:1081"
-    config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
-    config.apt_proxy.http = "http://192.168.16.74:1081"
-    config.apt_proxy.https = "DIRECT"
-  end
+  config.nfs.functional = false
+  config.nfs.verify_installed = false
+  config.vm.synced_folder ".", "/vagrant", type: "rsync", nfs: false
 
   config.vm.box = VM_BOX
-  # config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.provision "shell", path: "sh/bootstrap.sh"
 
   config.vm.provider :libvirt do |libvirt|
@@ -41,7 +36,6 @@ Vagrant.configure("2") do |config|
     end
     master.vm.provision "shell", path: "sh/master.sh",
       env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
-
   end
 
   (1..NUM_NODES).each do |i|
