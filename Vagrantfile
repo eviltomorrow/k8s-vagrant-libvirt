@@ -13,24 +13,17 @@ VM_BOX = "debian/bookworm64"
 
 Vagrant.configure("2") do |config|
   # config.nfs.functional = false
-  # config.nfs.verify_installed = false
-  # config.vm.synced_folder ".", "/vagrant", type: "rsync", nfs: false
-  # if Vagrant.has_plugin?("vagrant-proxyconf")
-  #   config.proxy.http     = "http://192.168.16.74:1081"
-  #   config.proxy.https    = "http://192.168.16.74:1081"
-  #   config.proxy.no_proxy = "localhost,127.0.0.1,.example.com"
-  # end
+  config.nfs.verify_installed = false
+  config.vm.synced_folder '.', '/vagrant', disabled: true
 
   config.vm.box = VM_BOX
-  # config.vm.synced_folder ".", "/vagrant", disabled: true
-  config.vm.provision "shell", path: "sh/bootstrap.sh"
+  # config.vm.provision "shell", path: "sh/bootstrap.sh"
 
   config.vm.provider :libvirt do |libvirt|
-    # libvirt.cpu_mode = 'host-passthrough'
     libvirt.memory = 2048
     libvirt.cpus = 2
-    # libvirt.qemu_use_session = false
   end
+  
 
   config.vm.define "master" do |master|
     master.vm.hostname = "master"
@@ -40,8 +33,8 @@ Vagrant.configure("2") do |config|
         libvirt.storage :file, :size => "#{DISK_GBS}G"
       end
     end
-    master.vm.provision "shell", path: "sh/master.sh",
-      env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
+    # master.vm.provision "shell", path: "sh/master.sh",
+    #   env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
 
   end
 
@@ -54,8 +47,8 @@ Vagrant.configure("2") do |config|
           libvirt.storage :file, :size => "#{DISK_GBS}G"
         end
       end
-      node.vm.provision "shell", path: "sh/node.sh",
-        env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
+      # node.vm.provision "shell", path: "sh/node.sh",
+      #   env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
     end
   end
 end
