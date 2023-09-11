@@ -1,23 +1,23 @@
-ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+ENV['VAGRANT_NO_PARALLEL']='yes'
 # number of worker nodes
-NUM_NODES = 2
+NUM_NODES=2
 # number of extra disks per worker
-NUM_DISKS = 1
+NUM_DISKS=1
 # size of each disk in gigabytes
-DISK_GBS = 20
+DISK_GBS=20
 
-MASTER_IP = "192.168.133.100"
-NODE_IP_BASE = "192.168.133.2" # 200, 201, ...
-TOKEN = "abcdef.0123456789abcdef"
-VM_BOX = "debian/bookworm64"
+MASTER_IP="192.168.133.100"
+NODE_IP_BASE="192.168.133.2" # 200, 201, ...
+TOKEN="abcdef.0123456789abcdef"
+VM_BOX="debian/bookworm64"
 
 Vagrant.configure("2") do |config|
   # config.nfs.functional = false
-  config.nfs.verify_installed = false
-  config.vm.synced_folder '.', '/vagrant', disabled: true
+  # config.nfs.verify_installed = false
+  # config.vm.synced_folder '.', '/vagrant', disabled: true
 
   config.vm.box = VM_BOX
-  # config.vm.provision "shell", path: "sh/bootstrap.sh"
+  config.vm.provision "shell", path: "sh/bootstrap.sh"
 
   config.vm.provider :libvirt do |libvirt|
     libvirt.memory = 2048
@@ -33,8 +33,8 @@ Vagrant.configure("2") do |config|
         libvirt.storage :file, :size => "#{DISK_GBS}G"
       end
     end
-    # master.vm.provision "shell", path: "sh/master.sh",
-    #   env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
+    master.vm.provision "shell", path: "sh/master.sh",
+      env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
 
   end
 
@@ -47,8 +47,8 @@ Vagrant.configure("2") do |config|
           libvirt.storage :file, :size => "#{DISK_GBS}G"
         end
       end
-      # node.vm.provision "shell", path: "sh/node.sh",
-      #   env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
+      node.vm.provision "shell", path: "sh/node.sh",
+        env: { "MASTER_IP" => MASTER_IP, "TOKEN" => TOKEN }
     end
   end
 end

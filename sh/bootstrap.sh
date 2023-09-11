@@ -14,7 +14,13 @@ apt-get update -y
 apt-get dist-upgrade -y
 apt-get autoremove
 
-echo "export PATH=$PATH:/sbin" > ~/.bashrc
+cat > /etc/default/locale << EOF
+LC_ALL=zh_CN.utf8
+LANG=zh_CN.utf8
+LANGUAGE=zh_CN.utf8
+EOF
+
+echo "export PATH=$PATH:/sbin" >> ~/.bashrc
 source ~/.bashrc
 
 swapoff -a && sed -ri 's/.*swap.*/#&/' /etc/fstab
