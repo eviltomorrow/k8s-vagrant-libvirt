@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+export PATH=$PATH:/sbin
+
 # 初始化 kubeadm
 kubeadm config images list --image-repository registry.aliyuncs.com/google_containers
 kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
