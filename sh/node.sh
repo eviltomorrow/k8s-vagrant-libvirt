@@ -7,7 +7,6 @@ mkdir -p /etc/default
 export PATH=$PATH:/sbin
 
 node_ip=$(ip addr | awk '/^[0-9]+: / {}; /inet.*global/ {print gensub(/(.*)\/(.*)/, "\\1", "g", $2)}' | grep 192.168.133.)
-echo ${node_ip}
 if [ ! -n ${node_ip} ]; then
 	echo "not found node-ip"
 	exit 1
