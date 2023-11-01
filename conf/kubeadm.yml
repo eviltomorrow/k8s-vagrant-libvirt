@@ -12,10 +12,14 @@ localAPIEndpoint:
   advertiseAddress: 192.168.133.100
   bindPort: 6443
 nodeRegistration:
+  kubeletExtraArgs:
+    node-ip: 192.168.133.100
   criSocket: unix:///var/run/containerd/containerd.sock
   imagePullPolicy: IfNotPresent
   name: master
-  taints: null
+  taints:
+  - effect: "NoSchedule"
+    key: "node-role.kubernetes.io/master"
 ---
 apiServer:
   timeoutForControlPlane: 4m0s
