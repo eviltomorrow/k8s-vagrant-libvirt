@@ -77,8 +77,13 @@ systemctl restart containerd && systemctl enable --now containerd
 # install kubernetes
 apt-get update
 apt-get install -y apt-transport-https ca-certificates curl
-curl -fsSL https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://mirrors.tuna.tsinghua.edu.cn/kubernetes/apt/ kubernetes-xenial main" | tee /etc/apt/sources.list.d/kubernetes.list
+
+release=1.30
+curl -fsSL https://mirrors.aliyun.com/kubernetes-new/core/stable/v${release}/deb/Release.key |
+    gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://mirrors.aliyun.com/kubernetes-new/core/stable/v${release}/deb/ /" |
+    tee /etc/apt/sources.list.d/kubernetes.list
+
 apt-get update
 apt-get install -y kubelet kubeadm kubectl
 apt-mark hold kubelet kubeadm kubectl

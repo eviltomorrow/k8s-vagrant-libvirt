@@ -43,7 +43,7 @@ chmod 0600 /etc/kubernetes/admin.conf
 # kubectl create -f /vagrant/conf/custom-resources.yaml
 
 # 使用 cilium
-mkdir -p /usr/local/app/helm; tar zxvfC /vagrant/bin/helm-v3.13.1-linux-amd64.tar.gz /usr/local/app/helm; ln -s /usr/local/app/helm/linux-amd64/helm /usr/local/bin/helm
+mkdir -p /usr/local/app/helm; tar zxvfC /vagrant/bin/helm-v3.15.1-linux-amd64.tar.gz /usr/local/app/helm; ln -s /usr/local/app/helm/linux-amd64/helm /usr/local/bin/helm
 helm repo add cilium https://helm.cilium.io
 kubectl create namespace cilium-system
 
