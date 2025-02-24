@@ -1,4 +1,4 @@
-apiVersion: kubeadm.k8s.io/v1beta3
+apiVersion: kubeadm.k8s.io/v1beta4
 bootstrapTokens:
 - groups:
   - system:bootstrappers:kubeadm:default-node-token
@@ -12,36 +12,43 @@ localAPIEndpoint:
   advertiseAddress: 192.168.133.100
   bindPort: 6443
 nodeRegistration:
-  kubeletExtraArgs:
-    node-ip: 192.168.133.100
   criSocket: unix:///var/run/containerd/containerd.sock
   imagePullPolicy: IfNotPresent
+  imagePullSerial: true
+  kubeletExtraArgs:
+  - name: node-ip
+    value: 192.168.133.100
   name: master
   taints:
-  - effect: "NoSchedule"
-    key: "node-role.kubernetes.io/master"
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+timeouts:
+  controlPlaneComponentHealthCheck: 4m0s
+  discovery: 5m0s
+  etcdAPICall: 2m0s
+  kubeletHealthCheck: 4m0s
+  kubernetesAPICall: 1m0s
+  tlsBootstrap: 5m0s
+  upgradeManifests: 5m0s
 ---
-apiServer:
-  timeoutForControlPlane: 4m0s
-apiVersion: kubeadm.k8s.io/v1beta3
+apiServer: {}
+apiVersion: kubeadm.k8s.io/v1beta4
+caCertificateValidityPeriod: 87600h0m0s
+certificateValidityPeriod: 8760h0m0s
 certificatesDir: /etc/kubernetes/pki
 clusterName: kubernetes
 controllerManager: {}
 dns: {}
+encryptionAlgorithm: RSA-2048
 etcd:
   local:
     dataDir: /var/lib/etcd
 imageRepository: registry.aliyuncs.com/google_containers
 kind: ClusterConfiguration
-kubernetesVersion: 1.30.0
+kubernetesVersion: v1.32.0
 networking:
   dnsDomain: cluster.local
   podSubnet: 10.244.0.0/16
   serviceSubnet: 10.96.0.0/12
+proxy: {}
 scheduler: {}
----
-apiVersion: kubeproxy.config.k8s.io/v1alpha1
-kind: KubeProxyConfiguration
-mode: ipvs
-ipvs:
-  strictARP: true
