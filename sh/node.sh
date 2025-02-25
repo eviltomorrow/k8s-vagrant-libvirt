@@ -1,5 +1,16 @@
 #!/bin/bash
 
+mkdir -p /etc/systemd/system/containerd.service.d/
+cat > /etc/systemd/system/containerd.service.d/http-proxy.conf <<-EOF
+[Service]
+Environment="HTTP_PROXY=http://${PROXY_IP}:1081"
+Environment="HTTPS_PROXY=http://${PROXY_IP}:1081"
+Environment="NO_PROXY=127.0.0.1,::1"
+EOF
+
+systemctl daemon-reload
+systemctl restart containerd && systemctl enable --now containerd
+
 set -e
 apt-get install gawk -y
 
