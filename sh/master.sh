@@ -44,16 +44,27 @@ chmod 0600 /etc/kubernetes/admin.conf
 
 # 使用 cilium
 mkdir -p /usr/local/app/helm; tar zxvfC /vagrant/bin/helm-v3.17.1-linux-amd64.tar.gz /usr/local/app/helm; ln -s /usr/local/app/helm/linux-amd64/helm /usr/local/bin/helm
-# helm repo add cilium https://helm.cilium.io
+
+
+export proxy="http://${PROXY_IP}:1081"
+export http_proxy=$proxy
+export https_proxy=$proxy
+export no_proxy="localhost, 127.0.0.1, ::1"
+
+helm repo add cilium https://helm.cilium.io
+
+unset proxy
+unset http_proxy
+unset https_proxy
 # kubectl create namespace cilium-system
 
-# target_device=""
-# for device in $(ip link | grep -E '^[0-9]' | awk '-F: ' '{print $2}'); do
-#     count=$(ip addr show ${device} | grep ${MASTER_IP} | wc -l)
-#     if [ ${count} == "1" ]; then
-#         target_device=${device}
-#         break
-#     fi
-# done
+target_device=""
+for device in $(ip link | grep -E '^[0-9]' | awk '-F: ' '{print $2}'); do
+    count=$(ip addr show ${device} | grep ${MASTER_IP} | wc -l)
+    if [ ${count} == "1" ]; then
+        target_device=${device}
+        break
+    fi
+done
 
-# helm install cilium cilium/cilium --namespace cilium-system --set hubble.relay.enabled=true --set hubble.ui.enabled=true --set prometheus.enabled=true --set operator.prometheus.enabled=true --set devices=${target_device} --set hubble.enabled=true --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}"
+helm install cilium cilium/cilium --namespace cilium-system --set hubble.relay.enabled=true --set hubble.ui.enabled=true --set prometheus.enabled=true --set operator.prometheus.enabled=true --set devices=${target_device} --set hubble.enabled=true --set hubble.metrics.enabled="{dns,drop,tcp,flow,port-distribution,icmp,http}"

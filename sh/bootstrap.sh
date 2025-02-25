@@ -76,7 +76,18 @@ echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docke
 apt-get update
 apt-get install containerd.io -y
 mkdir -p /etc/containerd; cp /vagrant/conf/config.toml /etc/containerd/config.toml
+
+mkdir -p /etc/systemd/system/containerd.service.d/
+cat > /etc/systemd/system/containerd.service.d/http-proxy.conf <<-EOF
+[Service]
+Environment="HTTP_PROXY=http://${PROXY_IP}:1081"
+Environment="HTTPS_PROXY=http://${PROXY_IP}:1081"
+Environment="NO_PROXY=noproxy_address>"
+EOF
+
+systemctl daemon-reload
 systemctl restart containerd && systemctl enable --now containerd
+
 
 # install kubernetes
 apt-get update
