@@ -82,7 +82,7 @@ systemctl restart containerd && systemctl enable --now containerd
 apt-get update
 apt-get install -y apt-transport-https ca-certificates curl
 
-release=1.30
+release=1.32
 curl -fsSL https://mirrors.aliyun.com/kubernetes-new/core/stable/v${release}/deb/Release.key |
     gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://mirrors.aliyun.com/kubernetes-new/core/stable/v${release}/deb/ /" |
