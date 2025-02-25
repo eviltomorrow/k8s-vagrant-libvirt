@@ -11,7 +11,7 @@ NODE_IP_BASE="192.168.133.2" # 200, 201, ...
 TOKEN="abcdef.0123456789abcdef"
 VM_BOX="debian/bookworm64"
 
-PROXY_IP=""
+PROXY_IP="192.168.16.107"
 
 Vagrant.configure("2") do |config|
   # config.nfs.functional = false
@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "sh/bootstrap.sh"
 
   config.vm.provider :libvirt do |libvirt|
-    libvirt.memory = 2048
+    libvirt.memory = 3072
     libvirt.cpus = 2
   end
   

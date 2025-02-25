@@ -45,7 +45,6 @@ chmod 0600 /etc/kubernetes/admin.conf
 # 使用 cilium
 mkdir -p /usr/local/app/helm; tar zxvfC /vagrant/bin/helm-v3.17.1-linux-amd64.tar.gz /usr/local/app/helm; ln -s /usr/local/app/helm/linux-amd64/helm /usr/local/bin/helm
 
-
 export proxy="http://${PROXY_IP}:1081"
 export http_proxy=$proxy
 export https_proxy=$proxy
@@ -56,7 +55,7 @@ helm repo add cilium https://helm.cilium.io
 unset proxy
 unset http_proxy
 unset https_proxy
-# kubectl create namespace cilium-system
+kubectl create namespace cilium-system
 
 target_device=""
 for device in $(ip link | grep -E '^[0-9]' | awk '-F: ' '{print $2}'); do
