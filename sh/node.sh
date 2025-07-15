@@ -17,7 +17,7 @@ apt-get install gawk -y
 mkdir -p /etc/default
 export PATH=$PATH:/sbin
 
-node_ip=$(ip addr | awk '/^[0-9]+: / {}; /inet.*global/ {print gensub(/(.*)\/(.*)/, "\\1", "g", $2)}' | grep 192.168.133.)
+export node_ip=$(ip addr | awk '/^[0-9]+: / {}; /inet.*global/ {print gensub(/(.*)\/(.*)/, "\\1", "g", $2)}' | grep 192.168.133.)
 if [ ! -n ${node_ip} ]; then
 	echo "not found node-ip"
 	exit 1
