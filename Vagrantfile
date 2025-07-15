@@ -9,9 +9,9 @@ DISK_GBS=20
 MASTER_IP="192.168.133.100"
 NODE_IP_BASE="192.168.133.2" # 200, 201, ...
 TOKEN="abcdef.0123456789abcdef"
-VM_BOX="debian/bookworm64"
+VM_BOX="debian/bullseye64"
 
-PROXY_IP="192.168.16.107"
+PROXY_IP="192.168.16.117"
 
 Vagrant.configure("2") do |config|
   # config.nfs.functional = false
@@ -19,7 +19,10 @@ Vagrant.configure("2") do |config|
   # config.vm.synced_folder '.', '/vagrant', disabled: true
 
   config.vm.box = VM_BOX
-  config.vm.provision "shell", path: "sh/bootstrap.sh"
+  # config.vm.provision "shell", path: "sh/bootstrap.sh"
+  # config.proxy.http     = "http://192.168.16.117:1081"
+  # config.proxy.https    = "http://192.168.16.117:1081"
+  # config.proxy.no_proxy = "localhost,127.0.0.1"
 
   config.vm.provider :libvirt do |libvirt|
     libvirt.memory = 3072

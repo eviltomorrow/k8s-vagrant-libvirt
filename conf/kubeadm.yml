@@ -45,7 +45,7 @@ etcd:
     dataDir: /var/lib/etcd
 imageRepository: registry.aliyuncs.com/google_containers
 kind: ClusterConfiguration
-kubernetesVersion: v1.32.0
+kubernetesVersion: v1.33.2
 networking:
   dnsDomain: cluster.local
   podSubnet: 10.244.0.0/16
