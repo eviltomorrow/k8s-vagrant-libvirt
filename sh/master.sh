@@ -54,7 +54,14 @@ chmod 0600 /etc/kubernetes/admin.conf
 # kubectl create -f /vagrant/conf/custom-resources.yaml
 
 # 使用 cilium
-mkdir -p /usr/local/app/helm; tar zxvfC /vagrant/bin/helm-v3.17.1-linux-amd64.tar.gz /usr/local/app/helm; ln -s /usr/local/app/helm/linux-amd64/helm /usr/local/bin/helm
+# mkdir -p /usr/local/app/helm; tar zxvfC /vagrant/bin/helm-v3.17.1-linux-amd64.tar.gz /usr/local/app/helm; ln -s /usr/local/app/helm/linux-amd64/helm /usr/local/bin/helm
+
+curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+sudo apt-get install apt-transport-https --yes
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update
+sudo apt-get install helm
+
 
 export proxy="http://${PROXY_IP}:1081"
 export http_proxy=$proxy
